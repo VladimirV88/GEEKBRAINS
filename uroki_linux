@@ -1,0 +1,237 @@
+1)пароли сложные, аутентификация по ключам.
+для root пароль сложный.
+
+2) firewall input -drop   всегда
+output тоже по хорошему
+
+3) службы только от их имени запускать не от рута
+
+4) двухфакторка для web сервисов
+
+5) redis elastic порты открытые. очень внимательно
+6)поиск эксплойтов для установленных пакетов на сайтах и проверка их kali linux, metasplot pentest.
+
+
+УРОК №2
+=====================================================================
+4) ls -a |cut -d ' ' -f1|grep '^\.' |wc -l
+результат = 69
+
+5) только файлы из: cat /etc/*.* 2> log2 | cat log2 |grep -c ''
+результат = 46
+
+
+7) lsof |grep 1000 |less
+
+8) mkdir -p photo/20{15..20}/{1..12}
+
+9) touch photo/20{18..20}/{1..12}/IMG20{18..20}{01..12}{01..02}_{01..10}.jpg && for i in *.jpg; do echo $i >$i; done
+
+10)ls -la |cut -d ' ' -f1 | sort |uniq |grep -v ' \.' |grep -v 'итого' |wc -l
+drwx------
+drwxrwxrwx
+drwxrwxr-x
+drwxr-xr-x
+-rw-------
+-rw-r-----
+-rw-r--r--
+-rw-rw-r--
+-rwxrwxrwx
+-rwxr-xr-x
+srwxr-xr-x
+
+результат = 11
+
+
+
+
+grep -rn 'Page generate'   поиск в слова в файлах
+
+УРОК №3
+=====================================================================
+1) созданные файлы остались и открываются
+
+2) сделал
+3) sudo usermod -aG sudo myuser
+4) sudo adduser myuser1
+   sudo groupadd developers
+   sudo usermod -aG developers myuser1
+   mkdir developer
+   chmod g+ws developer
+   chown myadmin:developers
+5) mkdir developer/temp
+   chmod +t /developer/temp
+6) mkdir dir6
+   chmod 710 dir6 
+   
+
+
+УРОК №4
+=====================================================================
+at -f file_task date_time 
+
+DZ
+1)
+cat 1_lesson 
+111111111111111111111111111
+
+333333333333333333333333333
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+ddddddddddddddddddddddddddd
+
+cat 1l.sh 
+#!/bin/bash -x
+tr -s '\n' < 1_lesson | tr [:lower:] [:upper:] > 1_out_lesson
+
+cat 1_out_lesson 
+111111111111111111111111111
+333333333333333333333333333
+AAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBB
+DDDDDDDDDDDDDDDDDDDDDDDDDDD
+
+2)~/GEEKBRAINS/bash/4_lesson$ cat 2.2_task.sh 
+#!/bin/bash -x
+# создаем папки года и подпапки месяца
+mkdir -p 20{10..17}/{01..12}
+for i in 20{09..17}
+do
+          #в цикле обходим месяцы
+           for j in {01..12}
+              do
+          #создаем файлы и копируем в папки
+              touch {01..12}.txt
+               mv $j.txt $i/$j
+          done
+          # проходимся по файлам и добавляем название файл** в файл.
+          for t in {01..12}.txt
+          do
+              echo файл$t | sed 's/.txt*/ /'> $t #удаляем .txt из файлов
+          done
+done
+
+Результат:
+
+~/GEEKBRAINS/bash/4_lesson$ ls -l |grep 201
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2010
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2011
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2012
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2013
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2014
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2015
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2016
+drwxr-xr-x 14 lamo lamo       4096 сен 28 12:23 2017
+
+~/GEEKBRAINS/bash/4_lesson$ ls -l 2015
+итого 48
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 01
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 02
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 03
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 04
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 05
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 06
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 07
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 08
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 09
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 10
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 11
+drwxr-xr-x 2 lamo lamo 4096 сен 28 12:32 12
+
+ls -l 2015/06
+итого 4
+-rw-r--r-- 1 lamo lamo 12 сен 28 12:32 06.txt
+
+cat 2015/06/06.txt 
+файл06 
+
+3) cat cron_dz.sh 
+#!/bin/bash -x
+du /home/* -hs > /home/lamo/GEEKBRAINS/bash/4_lesson/users_spaces
+
+задача в кроне, каждый день в 13ч 10 минут
+crontab -l |grep -v '#'
+10 13 * * * /home/lamo/GEEKBRAINS/bash/4_lesson/cron_dz.sh
+
+ls -l |grep *spa???
+-rw-rw-r--  1 lamo lamo        103 сен 28 13:10 users_spaces
+
+cat users_spaces 
+291M	/home/downloads
+176G	/home/lamo
+40K	/home/user1
+40K	/home/user2
+28K	/home/user3
+48K	/home/usr1cv8
+
+
+4) cat ownersort2.sh 
+#!/bin/bash -x
+
+# поиск файлов принадлежащих пользователю user2 и копирование в директорию user2 с сохранением метаданных
+find -type f -user user2 -exec cp -p  {} user2/ \;
+
+# поиск файлов принадлежащих пользователю user1 и копирование в директорию user1 с сохранением метаданных
+find -type f -user user1 -exec cp -p {} user1/ \;
+
+ls -l |grep user
+-rw-r--r--  1 user1 user1         0 сен 28 13:53 file1_user1
+-rw-r--r--  1 user2 user2         0 сен 28 13:53 file2_user2
+-rw-r--r--  1 user1 user1         0 сен 28 13:53 file_user1
+-rw-r--r--  1 user2 user2         0 сен 28 13:53 file_user2
+
+sudo ./ownersort2.sh 
+
+Результат:
+ls -l user1
+итого 0
+-rw-r--r-- 1 user1 user1 0 сен 28 13:53 file1_user1
+-rw-r--r-- 1 user1 user1 0 сен 28 13:53 file_user1
+
+ls -l user2
+итого 0
+-rw-r--r-- 1 user2 user2 0 сен 28 13:53 file2_user2
+-rw-r--r-- 1 user2 user2 0 сен 28 13:53 file_user2
+
+
+
+
+5) at now +1 minute
+warning: commands will be executed using /bin/sh
+at> ping -c 10 ya.ru >/home/lamo/GEEKBRAINS/bash/4_lesson/check_dns_ya<EOT>
+job 3 at Mon Sep 28 13:37:00 2020
+
+cat check_dns_ya 
+PING ya.ru (87.250.250.242) 56(84) bytes of data.
+64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=248 time=12.1 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=2 ttl=248 time=11.6 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=3 ttl=248 time=11.7 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=4 ttl=248 time=11.7 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=5 ttl=248 time=11.6 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=6 ttl=248 time=11.6 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=7 ttl=248 time=11.7 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=8 ttl=248 time=11.6 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=9 ttl=248 time=11.7 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=10 ttl=248 time=11.9 ms
+
+--- ya.ru ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9032ms
+rtt min/avg/max/mdev = 11.616/11.753/12.119/0.186 m
+
+УРОК №5
+=====================================================================
+
+3)
+интернет работает (Privacy-First DNS - Cloudflare)
+4) 
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+sudo iptables -P INPUT DROP
+
+5)
+sudo iptables -A INPUT -p tcp -s 192.168.10.0/24 --dport 22 -j ACCEPT
+
+
