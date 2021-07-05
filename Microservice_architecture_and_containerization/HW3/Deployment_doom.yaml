@@ -1,0 +1,29 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: deployment-doom
+ spec:
+   replicas: 1
+   selector:
+     matchLabels:
+       app: my-app-doom
+   strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 100%
+      type: RollingUpdate
+   template:
+     metadata:
+       labels:
+         app: my-app-doom
+     spec:
+       hostNetwork: true
+       serviceAccountName: kubedoom
+       containers:
+       - image: storaxdev/kubedoom:0.5.0
+         name: doom
+         ports:
+           - containerPort: 5900
+             protocol: TCP
+             name: vnc
