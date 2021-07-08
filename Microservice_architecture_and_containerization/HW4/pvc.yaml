@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ps-pgdata
+  annotations:
+    volume.beta.kubernetes.io/mount-options: "dir_mode=0777,file_mode=0777,uid=1000,gid=1000"
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: csi-ceph-hdd-dp1
