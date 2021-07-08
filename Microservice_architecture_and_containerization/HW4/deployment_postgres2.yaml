@@ -1,0 +1,42 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: deployment-postgres2
+ spec:
+   replicas: 1
+   selector:
+     matchLabels:
+       app: postgres2
+   strategy:
+      type: Recreate
+   template:
+     metadata:
+       labels:
+         app: postgres2
+     spec:
+       containers:
+       - image: postgres:12.4-alpine
+         name: postgres2
+         ports:
+           - containerPort: 5432
+             protocol: TCP
+         env:
+          - name: POSTGRES_DB
+            value: testdatabase
+          - name: POSTGRES_USER
+            value: testuser
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: POSTGRES_PASSWORD
+          - name: PGDATA
+            value: "/var/lib/postgresql/data/pgdata"
+         volumeMounts:
+                 - mountPath: "/var/lib/postgresql/data"
+                   name: ps-pgdata
+       volumes:
+       - name: ps-pgdata
+         persistentVolumeClaim:
+           claimName: ps-pgdata
