@@ -1,0 +1,5 @@
+---
+- name: Install pkg htop,unzip,telnet,java,python
+  hosts: server
+  roles:
+   - role: install_pkg

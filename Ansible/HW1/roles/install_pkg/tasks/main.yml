@@ -1,0 +1,13 @@
+---
+# tasks file for install_pkg
+- name: install latest versions of htop,unzip,telnet,java,python
+  apt:
+    name: 
+      - htop
+      - unzip
+      - telnet
+      - default-jre
+      - python
+    state: latest
+    update_cache: true
+  become: true

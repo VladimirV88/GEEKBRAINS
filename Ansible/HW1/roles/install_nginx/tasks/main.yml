@@ -1,0 +1,35 @@
+---
+# tasks file for install_nginx
+- name: Install Nginx on Debian family 
+  apt:
+    name=nginx
+    state=latest
+  when:
+    ansible_os_family == "Debian"
+  notify:
+    - nginx systemd
+ 
+
+- name: Replace nginx.conf
+  template:
+    src=templates/nginx.conf
+    dest=/etc/nginx/nginx.conf
+
+
+- name: Check nginx config
+  shell: "/usr/sbin/nginx -t"
+  register: nginx_config_status
+  notify:
+    - reloaded nginx
+
+
+- name: Copy index.html file
+  copy:
+     src: index.html 
+     dest: /etc/nginx/html/
+     owner: www-data
+     group: www-data
+     mode: 0644
+
+     #- name: Include tasks test nginx
+     #  import_tasks: test_nginx.yml

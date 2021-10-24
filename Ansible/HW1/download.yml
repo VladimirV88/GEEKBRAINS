@@ -1,0 +1,5 @@
+---
+- name: Download file from github
+  hosts: server
+  roles:
+     - role: downloads

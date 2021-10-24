@@ -1,0 +1,6 @@
+---
+- name: Download pdf from githab
+  get_url:
+    url: https://github.com/VladimirV88/geekbrains-conteinerization/raw/master/Docker%20Cheat%20Sheet.pdf
+    dest: "{{ base_root.dir }}/"
+    mode: '0777'

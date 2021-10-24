@@ -1,0 +1,23 @@
+---
+- hosts: all
+  gather_facts: yes
+  vars:
+    newline_character: "\n"
+    services_running: [kubelet]
+  tasks:
+  - name: populate service facts
+    service_facts:
+
+  - name: populate running services
+    set_fact:
+      services_running: "{{ services_running + [item] }}"
+    when: hostvars[inventory_hostname]['services']['{{item}}']['state'] == "running"
+    with_items: "{{ hostvars[inventory_hostname]['services'].keys() }}"
+
+
+  - debug:
+      msg: "running services: {{ services_running }}"
+
+
+  - debug:
+      msg: "NOT running services: {{ services_NOT_running }}"

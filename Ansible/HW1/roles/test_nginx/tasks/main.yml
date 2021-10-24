@@ -1,0 +1,4 @@
+---
+- name: smoke test respone 200 code
+  uri: url=http://{{ nginx_host }}:{{ nginx_port }}/ status_code=200
+  delegate_to: localhost

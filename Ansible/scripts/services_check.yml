@@ -1,0 +1,58 @@
+---
+# This tasks show installed services on server
+- name: Populate service facts
+  hosts: all
+  ignore_errors: true
+  ignore_unreachable: true
+  
+# Defined services
+  vars:
+   name_services:
+    - kubelet
+    - docker
+    - containerdd
+    # - ufw
+    # - x11-common
+
+  tasks:
+  #   - name: Debug the var itself
+  #     service_facts:
+  #     # no_log: true
+  #   - debug:
+  #       var: "ansible_facts.services['{{ item }}.service'].state"
+  #     loop: "{{ name_services }}"
+      # loop:
+      #   - kubelet
+      #   - docker
+      #   - containerdd
+    #   register: result
+    
+    # - name: Show result
+    #   service_facts:
+    # - debug:
+    #     msg: "{{ result }} installed! ip host: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} hostname: {{ ansible_fqdn }}"
+    #   when: "result is defined"
+
+    - name: Show TRUE or FALSE installed services
+      service_facts:
+      
+    - debug:
+        msg: "{{ services[item + '.service'].state is defined }}" 
+      loop: "{{ name_services }}"
+      register: services_state
+    - debug: 
+        var: services_state.results 
+      # loop_control:
+      #   label: "{{ item.name }}"
+    
+      # when: ansible_facts.services[item + '.service'].state == True
+      # ansible_facts.services[item + '.service'].state is define
+    
+    # - name: Debug Conditional
+    #   debug:
+    #     msg: "{{ ansible_facts.services[item + '.service'].status == 'enabled' }}"
+    #   when: >-
+    #     (ansible_facts.services[item + '.service'].state is not defined)
+    #     or
+    #     (ansible_facts.services[item + '.service'].state == 'running')
+    #   loop: "{{ name_services }}"
