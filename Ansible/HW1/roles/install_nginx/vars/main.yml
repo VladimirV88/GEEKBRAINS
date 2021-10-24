@@ -1,0 +1,8 @@
+---
+# vars file for install_nginx
+nginx_user: www-data
+worker_processes: auto
+worker_connections: 1024
+client_max_body_size: 512M
+nginx_host: learngeek
+nginx_port: 80

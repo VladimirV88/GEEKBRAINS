@@ -1,0 +1,2 @@
+[server]
+learn_geek ansible_ssh_host=192.168.10.129 ansible_ssh_user=vasilev

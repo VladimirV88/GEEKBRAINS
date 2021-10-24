@@ -1,0 +1,4 @@
+---
+base_root:
+   dir: "/tmp/base_root"
+   mode: "0755"

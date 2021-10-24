@@ -1,0 +1,5 @@
+---
+- name: Create base dir on remote hosts
+  hosts: server
+  roles:
+     - role: create_dir

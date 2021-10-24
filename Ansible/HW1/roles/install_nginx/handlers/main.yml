@@ -1,0 +1,14 @@
+---
+# handlers file for install_nginx
+- name: nginx systemd
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+    daemon-reload: yes
+
+- name: reloaded nginx
+  systemd:
+    name: nginx
+    state: reloaded
+#

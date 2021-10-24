@@ -1,0 +1,18 @@
+---
+# This tasks show only installed services on server
+- name: checking installed services on server
+  hosts: all
+  ignore_errors: true
+  ignore_unreachable: true
+  tasks:
+  - name: gathering facts and checking services
+    service_facts:
+  - debug:
+      msg: "{{ item + '.service' }}   installed!  On host: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} hostname: {{ ansible_fqdn }}"
+    loop:
+       - kubelet
+       - docker
+       - containerd
+    when: "item + '.service' in services"
+
+# If you want to remove the "skipped" line from the output then use:   | awk '! / skipping: /'

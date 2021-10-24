@@ -1,0 +1,5 @@
+---
+- name: Test respone 200 code
+  hosts: server
+  roles:
+    - test_nginx

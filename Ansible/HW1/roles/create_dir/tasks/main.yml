@@ -1,0 +1,17 @@
+---
+- name: "Create {{ base_root_dir}}"
+  file:
+     path: "{{ base_root.dir }}"
+     mode: "{{ base_root.mode}}"
+     state: directory
+
+- name: Create file on dir
+  file:
+     path: "{{ base_root.dir }}/version.txt"
+     state: touch
+
+- name: Make directory for html file
+  file:
+     path: /var/www/html
+     state: directory
+
